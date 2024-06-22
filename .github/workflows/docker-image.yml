@@ -27,4 +27,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: your-dockerhub-username/node-hello-world:latest
+        tags: shru2001/node-hello-world
