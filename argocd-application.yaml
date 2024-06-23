@@ -11,7 +11,7 @@ spec:
     path: hello-world
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: mynodespace
+    namespace: default
   syncPolicy:
     automated:
       prune: true
