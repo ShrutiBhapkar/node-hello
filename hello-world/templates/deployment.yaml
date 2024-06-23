@@ -24,10 +24,10 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "shru2001/node-hello-world:latest"
-          imagePullPolicy: IfNotPresent  # or your preferred policy
+          imagePullPolicy: IfNotPresent  # Adjust this policy based on your deployment strategy
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: 3000  # Adjust based on the port your application listens on
               protocol: TCP
           resources:
             requests:
@@ -36,3 +36,15 @@ spec:
             limits:
               memory: "256Mi"   # Adjust based on your application's needs
               cpu: "250m"       # Adjust based on your application's needs
+          livenessProbe:
+            httpGet:
+              path: /           # Adjust if your application has a specific health check endpoint
+              port: http        # Match the containerPort defined above
+            initialDelaySeconds: 30   # Adjust based on your application startup time
+            periodSeconds: 10         # Adjust based on your application's expected behavior
+          readinessProbe:
+            httpGet:
+              path: /           # Adjust if your application has a specific readiness check endpoint
+              port: http        # Match the containerPort defined above
+            initialDelaySeconds: 5    # Adjust based on your application startup time
+            periodSeconds: 10     
