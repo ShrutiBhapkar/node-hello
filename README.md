@@ -8,4 +8,4 @@ Great for testing simple deployments to the cloud
 
 `npm start`
 
-#Dockerization -
+#Dockerization -CI Part
