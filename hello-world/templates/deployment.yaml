@@ -5,9 +5,7 @@ metadata:
   labels:
     {{- include "hello-world.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "hello-world.selectorLabels" . | nindent 6 }}
@@ -23,44 +21,18 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      serviceAccountName: {{ include "hello-world.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
-          image: "shru2001/node-hello-world:latest"  # Hardcoded image
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "shru2001/node-hello-world:latest"
+          imagePullPolicy: IfNotPresent  # or your preferred policy
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          livenessProbe:
-            {{- toYaml .Values.livenessProbe | nindent 12 }}
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http  # Assuming your application listens on port specified in containerPort
-            initialDelaySeconds: 5
-            periodSeconds: 10
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
-      volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+            requests:
+              memory: "128Mi"   # Adjust based on your application's needs
+              cpu: "100m"       # Adjust based on your application's needs
+            limits:
+              memory: "256Mi"   # Adjust based on your application's needs
+              cpu: "250m"       # Adjust based on your application's needs
