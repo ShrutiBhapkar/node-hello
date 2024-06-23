@@ -5,8 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: shru2001/node-hello-world
-  tag: latest
+  repository: shru2001/node-hello-world  # Update the repository name to match your Docker Hub repository
+  tag: latest  # Update the tag to 'latest' or a specific version if needed
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -106,3 +106,4 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
