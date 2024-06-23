@@ -10,6 +10,7 @@ spec:
     - protocol: TCP
       port: 80  # Port exposed on the service
       targetPort: 3000  # Port on the container where the application listens
+      nodePort: 30080  # Choose an available port on your nodes (optional)
       name: http
   selector:
     {{- include "hello-world.selectorLabels" . | nindent 4 }}
