@@ -3,7 +3,7 @@ name: Docker Image CI
 on:
   push:
     branches:
-      - Node-app2
+      - master
 
 jobs:
   build:
